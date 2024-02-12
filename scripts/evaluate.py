@@ -3,6 +3,7 @@ import json
 import joblib
 import numpy as np
 from sklearn.metrics import mean_squared_error
+from dvclive import Live
 
 
 # Function to calculate RMSLE
@@ -28,6 +29,5 @@ print(f"Predictions: {predictions}")
 rmse_score = rmse(y_test, predictions)
 print(f"RMSE: {rmse_score}")
 
-metrics = {"RMSE": rmse_score}
-with open("metrics.json", "w") as f:
-    json.dump(metrics, f)
+with Live() as live:
+    live.log_metric("RMSE", rmse_score)

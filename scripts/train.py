@@ -6,10 +6,14 @@ import pandas as pd
 import joblib
 import os
 import yaml
+from dvclive import Live
 
 # Load parameters
 with open("params.yaml") as f:
     params = yaml.safe_load(f)
+
+live = Live()
+live.log_params(params)
 
 # init the model
 if params["model"] == "linear":
@@ -45,3 +49,4 @@ os.makedirs(model_dir, exist_ok=True)
 
 # Save the pipeline to a binary file
 joblib.dump(pipeline, f"{model_dir}/pipeline.joblib")
+live.log_artifact(f"{model_dir}/pipeline.joblib", type="model", name="passwords_model")
