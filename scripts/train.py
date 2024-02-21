@@ -6,6 +6,7 @@ import pandas as pd
 import joblib
 import os
 import yaml
+from dvclive import Live
 
 # Load parameters
 with open("params.yaml") as f:
@@ -45,3 +46,7 @@ os.makedirs(model_dir, exist_ok=True)
 
 # Save the pipeline to a binary file
 joblib.dump(pipeline, f"{model_dir}/pipeline.joblib")
+
+with Live() as live:
+    live.log_params(params)
+    live.log_artifact("models/pipeline.joblib", type="model", name="passwords_model")

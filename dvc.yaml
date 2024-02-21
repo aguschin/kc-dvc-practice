@@ -34,3 +34,12 @@ stages:
     - scripts/evaluate.py
     - models/pipeline.joblib
     - data/test.csv
+artifacts:
+  passwords_model:
+    path: models/pipeline.joblib
+    type: model
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step
