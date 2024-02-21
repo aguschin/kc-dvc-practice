@@ -1,0 +1,76 @@
+schema: '2.0'
+stages:
+  run_all:
+    cmd: bash run.sh
+  prepare_data:
+    cmd: python scripts/prepare.py
+    deps:
+    - path: data/passwords_raw.csv
+      hash: md5
+      md5: 4fb2860a8fd005b81499eed1734bb6ca
+      size: 113055
+    - path: scripts/prepare.py
+      hash: md5
+      md5: 7bde6dc38dd0f457081c5cb93a1001d9
+      size: 164
+    outs:
+    - path: data/passwords.csv
+      hash: md5
+      md5: f9fb5ba567d45e51b386d7c78f6f8912
+      size: 155037
+  split_data:
+    cmd: python scripts/split.py
+    deps:
+    - path: data/passwords.csv
+      hash: md5
+      md5: f9fb5ba567d45e51b386d7c78f6f8912
+      size: 155037
+    - path: scripts/split.py
+      hash: md5
+      md5: 5605c7817b4a257c029aeca89106ab86
+      size: 402
+    outs:
+    - path: data/test.csv
+      hash: md5
+      md5: fe242395b4972f4d7c2751ae051e1b9d
+      size: 77404
+    - path: data/train.csv
+      hash: md5
+      md5: d4cd3defc7a8a2140aa15ea7c54dfbfd
+      size: 77421
+  train_model:
+    cmd: python scripts/train.py
+    deps:
+    - path: data/train.csv
+      hash: md5
+      md5: d4cd3defc7a8a2140aa15ea7c54dfbfd
+      size: 77421
+    - path: scripts/train.py
+      hash: md5
+      md5: 1e2266104a8a577caf85ef98479dbf9d
+      size: 1223
+    params:
+      params.yaml:
+        model: linear
+        ngrams.max: 1
+        ngrams.min: 1
+    outs:
+    - path: models/pipeline.joblib
+      hash: md5
+      md5: 892c9a428912646acb3a750cd1dbde78
+      size: 2991
+  evaluate_model:
+    cmd: python scripts/evaluate.py
+    deps:
+    - path: data/test.csv
+      hash: md5
+      md5: fe242395b4972f4d7c2751ae051e1b9d
+      size: 77404
+    - path: models/pipeline.joblib
+      hash: md5
+      md5: 892c9a428912646acb3a750cd1dbde78
+      size: 2991
+    - path: scripts/evaluate.py
+      hash: md5
+      md5: 028d05b46007d4504928c01f51eaed86
+      size: 770
