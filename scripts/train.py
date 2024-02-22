@@ -31,7 +31,6 @@ pipeline = Pipeline(
                 analyzer="char",
             ),
         ),
-        ("tfidf", TfidfTransformer()),
         ("clf", model),
     ]
 )

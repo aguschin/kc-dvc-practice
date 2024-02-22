@@ -32,5 +32,13 @@ metrics = {"RMSE": rmse_score}
 with open("metrics.json", "w") as f:
     json.dump(metrics, f)
 
+df = test.copy()
+df["y_pred"] = predictions
+df["error"] = (df["Times"] - df["y_pred"]).abs()
+df["length"] = df["Password"].str.len()
+
 with Live() as live:
     live.log_metric("RMSE", rmse_score)
+    live.log_plot("error", df.groupby("length").error.mean().reset_index(), x="length", y="error")
+    live.log_plot("y_true vs y_pred (log)", df, x="Times", y="y_pred", template="scatter")
+    live.log_plot("y_true vs y_pred", df.assign(y_pred=10 ** df.y_pred, Times=10 ** df.Times), x="Times", y="y_pred", template="scatter")

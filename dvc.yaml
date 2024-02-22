@@ -43,3 +43,15 @@ metrics:
 plots:
 - dvclive/plots/metrics:
     x: step
+- dvclive/plots/custom/error.json:
+    template: linear
+    x: length
+    y: error
+- dvclive/plots/custom/y_true vs y_pred (log).json:
+    template: scatter
+    x: Times
+    y: y_pred
+- dvclive/plots/custom/y_true vs y_pred.json:
+    template: scatter
+    x: Times
+    y: y_pred
