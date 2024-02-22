@@ -47,18 +47,18 @@ stages:
       size: 77421
     - path: scripts/train.py
       hash: md5
-      md5: dc495f96dc2a0e3e99ff8dc28823d3ca
-      size: 1384
+      md5: d1c566d6328988c7b70ab846640c4d9d
+      size: 1345
     params:
       params.yaml:
-        model: ridge
-        ngrams.max: 3
+        model: rf
+        ngrams.max: 1
         ngrams.min: 1
     outs:
     - path: models/pipeline.joblib
       hash: md5
-      md5: a09346376528a210ab52edf6ba98bcd3
-      size: 469497
+      md5: ebcaaf7b58e90e650b138e04eb8e67fc
+      size: 12444823
   evaluate_model:
     cmd: python scripts/evaluate.py
     deps:
@@ -68,9 +68,9 @@ stages:
       size: 77404
     - path: models/pipeline.joblib
       hash: md5
-      md5: a09346376528a210ab52edf6ba98bcd3
-      size: 469497
+      md5: ebcaaf7b58e90e650b138e04eb8e67fc
+      size: 12444823
     - path: scripts/evaluate.py
       hash: md5
-      md5: 6bb8011386e5fb8ab667b5bbf966d629
-      size: 856
+      md5: 523ceb3102075e33f69758089facf03c
+      size: 1318
